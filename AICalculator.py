@@ -18,7 +18,7 @@ st.title("Text To Math Problem Solver Using Google Gemini 🚀")
     # st.stop()
 
 gemini_api_key = st.secrets["GOOGLE_API_KEY"]
-genai.configure(apikey=gemini_api_key)
+genai.configure(api_key=gemini_api_key)
 
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",  
@@ -91,3 +91,4 @@ if st.button("Find my answer"):
             st.success(response)
     else:
         st.warning("Please enter a question.")
+
