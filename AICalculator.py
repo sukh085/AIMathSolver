@@ -1,4 +1,5 @@
 import streamlit as st
+import google.generativeai as genai
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import LLMMathChain, LLMChain
 from langchain.prompts import PromptTemplate
@@ -10,17 +11,18 @@ from langchain.callbacks import StreamlitCallbackHandler
 st.set_page_config(page_title="Text To Math Problem Solver And Data Search Assistant", page_icon="🧮")
 st.title("Text To Math Problem Solver Using Google Gemini 🚀")
 
-#Gemini_API_Key = "AIzaSyBHtrj9Py_7uS8o8tLBYOsh3Qw9I5NPWkA"
+#gemini_api_key = st.sidebar.text_input(label="Google Gemini API Key", type="password")
 
-gemini_api_key = st.sidebar.text_input(label="Google Gemini API Key", type="password")
+#if not gemini_api_key:
+    # st.info("Please add your Gemini API key to continue")
+    # st.stop()
 
-if not gemini_api_key:
-    st.info("Please add your Gemini API key to continue")
-    st.stop()
+gemini_api_key = st.secrets["GOOGLE_API_KEY"]
+genai.configure(apikey=gemini_api_key)
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",  # use a valid model
-    google_api_key=gemini_api_key
+    model="gemini-2.5-flash",  
+    google_api_key=gemini_api_key, temperature=0
 )
 
 wikipedia_wrapper = WikipediaAPIWrapper()
